@@ -5,14 +5,24 @@ import firebase from '../firebase';
 
 export default (WrappedComponent) => {
     class Db extends Component {
+        dbRef = firebase.collection('chat-log');
+
         componentDidMount(){
-            firebase.collection('chat-log').onSnapshot(
-                this.props.updateChatMessages
-            );
+            this.dbRef.orderBy('timestamp','desc').onSnapshot( this.props.updateChatMessages );
+        }
+
+        sendMessage = (msg) => {
+            console.log('From DB HOC:', msg);
+            const newMsg = {
+                name: 'Jake',
+                message: msg,
+                timestamp: new Date().getTime()
+            };
+            this.dbRef.add(newMsg);
         }
 
         render(){
-            return <WrappedComponent {...this.props} />
+            return <WrappedComponent {...this.props} sendMessage={this.sendMessage} />
         }
     }
 
