@@ -3,16 +3,29 @@ import { connect } from 'react-redux';
 import { setUserData } from "../actions";
 
 class ChooseName extends Component {
-    state = {
-        name: '',
-        color:'#ffffff',
-        error: ''
+    constructor(props) {
+        super(props);
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log('user',user);
+        if (user){
+            this.state = {
+                name: user.name ,
+                color: user.color ,
+                error: ''
+            }
+        } else {
+            this.state = {
+                name: '',
+                color: '#ffffff',
+                error: ''
+            }
+        };
     }
 
-    handleSubmit=(e)=>{
+    handleSubmit = (e) => {
         e.preventDefault();
 
-        const { name,color} = this.state;
+        const { name,color } = this.state;
 
         if(!name || color === '#ffffff'){
             return this.setState({

@@ -18,6 +18,9 @@ export function updateChatMessages(snapshot) {
 }
 
 export function setUserData(payload){
+
+    localStorage.setItem('user',JSON.stringify(payload));
+
     return{
         type: types.SET_USER_DATA,
         payload
