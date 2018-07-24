@@ -16,3 +16,10 @@ export function updateChatMessages(snapshot) {
         messages
     }
 }
+
+export function setUserData(payload){
+    return{
+        type: types.SET_USER_DATA,
+        payload
+    }
+}
